@@ -50,6 +50,8 @@ module.exports = new GoogleStrategy(
       });
     }
     console.log(user);
+    const currentUser = user;
+    console.log("current:", currentUser);
     //5. Return về hàm done với thông tin user lấy được để passport tự động xử lý đăng nhập
     return done(null, user);
   }

@@ -16,6 +16,7 @@ var upLoadFileRouter = require("./routes/uploadfile");
 var authRouter = require("./routes/auth");
 
 var app = express();
+app.use(cors());
 
 app.use(
   session({
@@ -24,10 +25,8 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use("google", GooglePassport);
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
@@ -36,7 +35,7 @@ passport.deserializeUser(async function (id, done) {
   const user = await model.User.findByPk(id);
   done(null, user);
 });
-
+passport.use("google", GooglePassport);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
