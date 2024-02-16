@@ -21,12 +21,11 @@ app.use(cors());
 app.use(
   session({
     secret: "f8",
-    resave: true,
+    resave: false,
     saveUninitialized: true,
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
+
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
@@ -35,11 +34,14 @@ passport.deserializeUser(async function (id, done) {
   const user = await model.User.findByPk(id);
   done(null, user);
 });
-passport.use("google", GooglePassport);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use("google", GooglePassport);
+
 app.use(express.static(path.join(__dirname, "public")));
 
 // Cấu hình để phục vụ tệp tin từ thư mục 'uploads'

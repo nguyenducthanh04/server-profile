@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const passport = require("passport");
+const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 const isLogin = (req, res, next) => {
   console.log(req.user);
   if (req.user) {
@@ -16,8 +18,16 @@ router.get("/google/redirect", passport.authenticate("google"));
 //   passport.authenticate("google", {
 //     failureRedirect: "/auth/login",
 //     failureMessage: true,
-//     successRedirect: "http://127.0.0.1:3001/user",
-//   })
+//     successRedirect: "http://127.0.0.1:3001/profile",
+//   }),
+//   (req, res) => {
+//     const userData = {
+//       id: req.user.id,
+//       name: req.user.name,
+//       email: req.user.email,
+//     };
+//     res.json(userData);
+//   }
 // );
 router.get(
   "/google/callback",
@@ -26,21 +36,24 @@ router.get(
     failureMessage: true,
   }),
   (req, res) => {
-    // Lưu thông tin người dùng vào session hoặc gửi về cho ReactJS qua API
     const userData = {
       id: req.user.id,
       name: req.user.name,
       email: req.user.email,
-
-      // Các thông tin khác nếu cần
     };
+    const secretKey = crypto.randomBytes(32).toString("hex");
+    const token = jwt.sign(userData, secretKey, { expiresIn: "1h" });
+    const queryParams = new URLSearchParams({
+      token: token,
+      ...userData,
+    }).toString();
+    console.log(req.user);
 
-    // Gửi thông tin người dùng về cho ReactJS qua redirect hoặc API
-    res.redirect(
-      `http://127.0.0.1:3001/user?${new URLSearchParams(userData).toString()}`
-    );
+    // res.redirect(`http://127.0.0.1:3001/profile?${queryParams}`);
+    res.redirect("/users/display");
   }
 );
+
 router.get("/users", (req, res) => {
   const response = req.user;
   console.log(response);

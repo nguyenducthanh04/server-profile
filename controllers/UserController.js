@@ -3,9 +3,9 @@ const Files = model.files;
 
 class Users {
   async User(req, res) {
-    const user = req.user;
-    console.log(user);
-    res.json(user);
+    const name = req.user;
+    console.log(name);
+    res.json(name);
   }
 }
 module.exports = new Users();
