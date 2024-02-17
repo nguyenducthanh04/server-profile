@@ -49,15 +49,18 @@ router.get(
     }).toString();
     console.log(req.user);
 
-    // res.redirect(`http://127.0.0.1:3001/profile?${queryParams}`);
-    res.redirect("/users/display");
+    res.redirect(`http://127.0.0.1:3001/profile?${queryParams}`);
+    // res.redirect("/users/display");
   }
 );
 
 router.get("/users", (req, res) => {
   const response = req.user;
   console.log(response);
-  res.json(response);
+  res.json({
+    status: "success",
+    data: response,
+  });
 });
 router.get("/login/url", (req, res) => {
   const redirectUrl = "http://127.0.0.1:3000/auth/google/redirect";

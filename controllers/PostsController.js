@@ -1,5 +1,5 @@
 const model = require("../models/index");
-const Posts = model.posts;
+const Posts = model.Posts;
 
 class PostsController {
   async getAllPost(req, res) {
@@ -7,15 +7,20 @@ class PostsController {
     res.json(postsList);
   }
   async createPost(req, res) {
-    const { title, content } = req.body;
-    const createPost = await Posts.create({ title, content });
+    const { title, content, fileName, filePath } = req.body;
+    const createPost = await Posts.create({
+      title,
+      content,
+      fileName: req.file.originalname,
+      filePath: req.file.path,
+    });
     res.json(createPost);
   }
   async updatePost(req, res) {
     const { id } = req.params;
-    const { title, content } = req.body;
+    const { title, content, fileName, filePath } = req.body;
     const updatePost = await Posts.update(
-      { title, content },
+      { title, content, fileName, filePath },
       {
         where: {
           id,

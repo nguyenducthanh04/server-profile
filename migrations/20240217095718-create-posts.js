@@ -2,17 +2,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('files', {
+    await queryInterface.createTable('Posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      filename: {
+      title: {
         type: Sequelize.STRING
       },
-      filepath: {
+      content: {
+        type: Sequelize.TEXT
+      },
+      fileName: {
+        type: Sequelize.STRING
+      },
+      filePath: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -26,6 +32,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('files');
+    await queryInterface.dropTable('Posts');
   }
 };

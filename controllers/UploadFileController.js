@@ -20,25 +20,25 @@ class UploadFile {
     const fileList = await Files.findAll();
     res.json(fileList);
   }
-  // async updateFile(req, res) {
-  //   const { id } = req.params;
-  //   const { filename, filepath } = req.body;
-  //   // const image = await Files.findByPk(id);
-  //   // if (image) {
-  //   const update = await Files.update(
-  //     {
-  //       filename,
-  //       filepath,
-  //     },
-  //     {
-  //       where: {
-  //         id: id,
-  //       },
-  //     }
-  //   );
-  //   res.json({ message: "File update successfully" });
-  //   // }
-  // }
+  async updateFile(req, res) {
+    const { id } = req.params;
+    const { filename, filepath } = req.body;
+    // const image = await Files.findByPk(id);
+    // if (image) {
+    const update = await Files.update(
+      {
+        filename,
+        filepath,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.json({ message: "File update successfully" });
+    // }
+  }
   async deleteFile(req, res) {
     const { id } = req.params;
     await Files.destroy({

@@ -16,6 +16,11 @@ var upLoadFileRouter = require("./routes/uploadfile");
 var authRouter = require("./routes/auth");
 
 var app = express();
+const corsOptions = {
+  origin: "http://localhost:3001",
+  credentials: true, // cho phép gửi cookie qua CORS
+};
+
 app.use(cors());
 
 app.use(
