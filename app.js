@@ -14,6 +14,7 @@ var usersRouter = require("./routes/users");
 var postsRouter = require("./routes/posts");
 var upLoadFileRouter = require("./routes/uploadfile");
 var authRouter = require("./routes/auth");
+var mailRouter = require("./routes/sendMail");
 
 var app = express();
 const corsOptions = {
@@ -56,6 +57,7 @@ app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/uploadFile", upLoadFileRouter);
 app.use("/auth", authRouter);
+app.use("/mail", mailRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
