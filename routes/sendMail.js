@@ -21,7 +21,9 @@ router.post("/send-mail", async function (req, res) {
       from: `Người nhận tin nhắn:<${email}>`,
       to: "dducthanh04@gmail.com",
       subject: "Contact",
-      html: `Tin nhắn từ ${email}: ${content}`,
+      html: `<div">
+      <h3 style:"text-align: center">Tin nhắn từ ${email} gửi đến bạn: <em>${content}</em></h3>
+      </div>`,
     });
 
     res.send("Email sent successfully");
